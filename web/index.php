@@ -31,18 +31,30 @@ foreach ($client->parseEvents() as $event) {
             switch ($message['type']) {
                 case 'text':
                 	$m_message = $message['text'];
-                	if($m_message!="")
+                	if($m_message=="123")
                 	{
                 		$client->replyMessage(array(
                         'replyToken' => $event['replyToken'],
                         'messages' => array(
                             array(
                                 'type' => 'text',
-                                'text' => $m_message
+                                'text' => $m_message."123"
                             )
                         )
                     	));
                 	}
+                    elseif($m_message=="456")
+                    {
+                        $client->replyMessage(array(
+                            'replyToken' => $event['replyToken'],
+                            'messages' => array(
+                                array(
+                                    'type' => 'text',
+                                    'text' => $m_message."45645646"
+                                )
+                            )
+                        ));
+                    }
                     break;
                 
             }
