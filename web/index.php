@@ -73,6 +73,7 @@ foreach ($client->parseEvents() as $event) {
                     elseif($m_message=="grouptest")
                     {
                         $client->replyMessage(array(
+                            'replyToken' => $event['replyToken'],
                             'to' => $group,
                             'messages' => array(
                                 array(
@@ -85,6 +86,7 @@ foreach ($client->parseEvents() as $event) {
                     elseif($m_message=="usertest")
                     {
                         $client->replyMessage(array(
+                            'replyToken' => $event['replyToken'],
                             'to' => $user,
                             'messages' => array(
                                 array(
