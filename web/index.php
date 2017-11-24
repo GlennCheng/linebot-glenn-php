@@ -76,7 +76,7 @@ foreach ($client->parseEvents() as $event) {
                             'messages' => array(
                                 array(
                                     'type' => 'text',
-                                    'text' => json_encode($client->parseEvents())
+                                    'text' => $user
                                 )
                             )
                         ));
@@ -84,7 +84,7 @@ foreach ($client->parseEvents() as $event) {
                     elseif($m_message=="usertest")
                     {
                         $client->replyMessage(array(
-                            'to' => $user,
+                            'replyToken' => $event['replyToken'],
                             'messages' => array(
                                 array(
                                     'type' => 'text',
