@@ -56,7 +56,27 @@ foreach ($client->parseEvents() as $event) {
                         ));
                     }
                     break;
-                
+
+                case "image" :
+                    $content_type = "圖片訊息";
+                    $m_message = $message['jpeg'];   // 讀取圖片內容
+                    $data = ['replyToken' => $event['replyToken'], "messages" => array(["type" => "image", "originalContentUrl" => $m_message, "previewImageUrl" => $m_message])];
+                    $client->replyMessage($data);
+                    break;
+
+                case "video" :
+                    $content_type = "影片訊息";
+                    $m_message = $message['mp4'];   // 讀取影片內容
+                    $data = ['replyToken' => $event['replyToken'], "messages" => array(["type" => "video", "originalContentUrl" => $m_message, "previewImageUrl" => $m_message])];
+                    $client->replyMessage($data);
+                    break;
+
+                case "audio" :
+                    $content_type = "語音訊息";
+                    $m_message = $message['mp3'];   // 讀取聲音內容
+                    $data = ['replyToken' => $event['replyToken'], "messages" => array(["type" => "audio", "originalContentUrl" => $m_message[0], "duration" => $m_message[1]])];
+                    $client->replyMessage($data);
+                    break;
             }
             break;
         default:
