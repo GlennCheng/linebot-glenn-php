@@ -55,7 +55,20 @@ foreach ($client->parseEvents() as $event) {
                             )
                         ));
                     }
+                    elseif($m_message=="jsontest")
+                    {
+                        $client->replyMessage(array(
+                            'replyToken' => $event['replyToken'],
+                            'messages' => array(
+                                array(
+                                    'type' => 'text',
+                                    'text' => json_encode($client->parseEvents())
+                                )
+                            )
+                        ));
+                    }
                     break;
+
 
                 case "image" :
                     $content_type = "圖片訊息";
