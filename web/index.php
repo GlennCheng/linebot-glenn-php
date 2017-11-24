@@ -28,8 +28,9 @@ foreach ($client->parseEvents() as $event) {
     switch ($event['type']) {
         case 'message':
             $message = $event['message'];
-            $user = $event['source']['userId'] ? $event['source']['userId'] :"" ;
-            $group = $event['source']['groupId'] ? $event['source']['groupId'] :"" ;
+            $source = $event['source'];
+            $user = $source['userId'] ;
+            $group = $source['groupId'] ;
             switch ($message['type']) {
                 case 'text':
                 	$m_message = $message['text'];
@@ -72,11 +73,11 @@ foreach ($client->parseEvents() as $event) {
                     elseif($m_message=="grouptest")
                     {
                         $client->replyMessage(array(
-                            'to' => $group,
+                            'replyToken' => $event['replyToken'],
                             'messages' => array(
                                 array(
                                     'type' => 'text',
-                                    'text' => json_encode($client->parseEvents())
+                                    'text' => $group
                                 )
                             )
                         ));
