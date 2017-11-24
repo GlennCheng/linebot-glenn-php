@@ -76,7 +76,7 @@ foreach ($client->parseEvents() as $event) {
                             'messages' => array(
                                 array(
                                     'type' => 'text',
-                                    'text' => $user
+                                    'text' => json_encode($client->parseEvents())
                                 )
                             )
                         ));
@@ -88,7 +88,7 @@ foreach ($client->parseEvents() as $event) {
                             'messages' => array(
                                 array(
                                     'type' => 'text',
-                                    'text' => json_encode($client->parseEvents())
+                                    'text' => $user
                                 )
                             )
                         ));
