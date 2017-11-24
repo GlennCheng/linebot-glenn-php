@@ -28,6 +28,8 @@ foreach ($client->parseEvents() as $event) {
     switch ($event['type']) {
         case 'message':
             $message = $event['message'];
+            $user = $event['source']['userId'] ? $event['source']['userId'] :"" ;
+            $group = $event['source']['groupId'] ? $event['source']['groupId'] :"" ;
             switch ($message['type']) {
                 case 'text':
                 	$m_message = $message['text'];
@@ -67,49 +69,52 @@ foreach ($client->parseEvents() as $event) {
                             )
                         ));
                     }
+                    elseif($m_message=="grouptest")
+                    {
+                        $client->replyMessage(array(
+                            'to' => $group,
+                            'messages' => array(
+                                array(
+                                    'type' => 'text',
+                                    'text' => json_encode($client->parseEvents())
+                                )
+                            )
+                        ));
+                    }
+                    elseif($m_message=="usertest")
+                    {
+                        $client->replyMessage(array(
+                            'to' => $user,
+                            'messages' => array(
+                                array(
+                                    'type' => 'text',
+                                    'text' => json_encode($client->parseEvents())
+                                )
+                            )
+                        ));
+                    }
                     break;
 
 
                 case "image" :
-
-                    $client->replyMessage(array(
-                        'replyToken' => $event['replyToken'],
-                        'messages' => array(
-                            array(
-                                'type' => 'text',
-                                'text' => json_encode($client->parseEvents())
-                            )
-                        )
-                    ));
-
+                    $content_type = "圖片訊息";
+                    $m_message = $message['type'];   // 讀取圖片內容
+                    $data = ['replyToken' => $event['replyToken'], "messages" => array(["type" => "image", "originalContentUrl" => $m_message, "previewImageUrl" => $m_message])];
+                    $client->replyMessage($data);
                     break;
 
                 case "video" :
-
-                    $client->replyMessage(array(
-                        'replyToken' => $event['replyToken'],
-                        'messages' => array(
-                            array(
-                                'type' => 'text',
-                                'text' => json_encode($client->parseEvents())
-                            )
-                        )
-                    ));
-
+                    $content_type = "影片訊息";
+                    $m_message = $message['mp4'];   // 讀取影片內容
+                    $data = ['replyToken' => $event['replyToken'], "messages" => array(["type" => "video", "originalContentUrl" => $m_message, "previewImageUrl" => $m_message])];
+                    $client->replyMessage($data);
                     break;
 
                 case "audio" :
-
-                    $client->replyMessage(array(
-                        'replyToken' => $event['replyToken'],
-                        'messages' => array(
-                            array(
-                                'type' => 'text',
-                                'text' => json_encode($client->parseEvents())
-                            )
-                        )
-                    ));
-                
+                    $content_type = "語音訊息";
+                    $m_message = $message['mp3'];   // 讀取聲音內容
+                    $data = ['replyToken' => $event['replyToken'], "messages" => array(["type" => "audio", "originalContentUrl" => $m_message[0], "duration" => $m_message[1]])];
+                    $client->replyMessage($data);
                     break;
             }
             break;
